@@ -1,0 +1,21 @@
+{
+  "source": {
+    "source_type": "gcs",
+    "source_dataset": "<dataset name>",
+    "source_system": "landing"
+  },
+  "target": {
+    "target_type": "snowflake",
+    "target_system": "raw",
+    "target_dataset": "<datasetUPPER>",
+    "target_schema_name": "<target schema name>"
+  },
+  "source_files": ["<outputfile>"],
+  "options": {
+        "code_page": "65001",
+        "text_qualifier": "\"",
+        "csv_delimiter": ","
+  },
+  "dag_id": "<source_to_landing dag id>",
+  "dag_run_id": "<source_to_landing dag run>"
+}

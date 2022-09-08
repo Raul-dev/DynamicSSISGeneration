@@ -1,0 +1,87 @@
+{
+  "source_type": "mssql",
+  "source_dataset": "Document",
+  "source_system": "rescentral",
+  "source_schema_name": "Production",
+  "source_query_where_clause": "",
+  "output_kafka_server": "<output kafka server>",
+  "output_kafka_topic": "etl-rescentral-to-landing-output-status-dev-topic",
+  "dag_id": "fake_dag_id_123",
+  "dag_run_id": "fake_dag_run_id_12345678",
+  "fields_mapping": [
+    {
+      "source_field_name": "DocumentNode",
+      "target_field_name": "DocumentNode"
+    },
+    {
+      "source_field_name": "Title",
+      "target_field_name": "Title"
+    },
+    {
+      "source_field_name": "FileName",
+      "target_field_name": "FileName"
+    },
+    {
+      "source_field_name": "DocumentSummary",
+      "target_field_name": "DocumentSummary"
+    },
+    {
+      "source_field_name": "Document",
+      "target_field_name": "Document"
+    },
+    {
+      "source_field_name": "rowguid",
+      "target_field_name": "rowguid"
+    },
+    {
+      "source_field_name": "ModifiedDate",
+      "target_field_name": "ModifiedDate"
+    }
+  ],
+  "schema": [
+    {
+      "name": "DocumentNode",
+      "type": "hierarchyid"
+    },
+    {
+      "name": "Title",
+      "type": "nvarchar(50)"
+    },
+    {
+      "name": "FileName",
+      "type": "nvarchar(400)"
+    },
+    {
+      "name": "DocumentSummary",
+      "type": "nvarchar(max)"
+    },
+    {
+      "name": "Document",
+      "type": "varbinary(max)"
+    },
+    {
+      "name": "rowguid",
+      "type": "uniqueidentifier"
+    },
+    {
+      "name": "ModifiedDate",
+      "type": "datetime"
+    }
+  ],
+  "target_file": {
+    "target_type": "gcs",
+    "target_dataset": "Document",
+    "target_system": "landing",
+    "target_project": "dev-data-platform-number",
+    "target_bucket": "test-landing-dev",
+    "target_path": "rescentral/batch/{YYYY}/{MM}/{DD}/{DATASET}_{TIMESTAMP}.{FILE_FORMAT}",
+    "code_page": "65001",
+    "text_qualifier": "\"",
+    "csv_delimiter": ","
+  },
+  "target_trigger_file": {
+    "target_trigger_project": "dev-data-platform-number",
+    "target_trigger_bucket": "dbprj-landing-dev",
+    "target_trigger_path": "raw-layer-triggers/to-process/etl_landing_to_raw_{DATASET}_job_{TIMESTAMP}.json"
+  }
+}

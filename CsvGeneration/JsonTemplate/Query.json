@@ -1,0 +1,27 @@
+{
+    "source_type": "mssql",
+    "source_dataset": "query",
+    "source_system": "rescentral",
+    "source_query": "SELECT 
+	p.Name, 
+	p.ProductNumber, 
+	sh.ShipDate,
+	sd.OrderQty, 
+	sd.UnitPrice, 
+	sd.LineTotal, 
+	SUM(sd.OrderQty * sd.UnitPrice) OVER(PARTITION BY p.Name ORDER BY sh.ShipDate) RunningAmount
+FROM 
+	[Sales].[SalesOrderHeader] sh 
+	INNER JOIN [Sales].[SalesOrderDetail] sd ON sd.SalesOrderID = sh.SalesOrderID
+	INNER JOIN [Production].[Product] p ON sd.ProductID = p.ProductID
+ORDER BY p.Name, p.ProductNumber
+",
+    "target_file": {
+        "target_project": "dev-data-platform-number",
+        "target_bucket": "dbprj-landing-dev",
+        "target_path": "rescentral/adhoc/{YYYY}/{MM}/{DD}/{DATASET}_{TIMESTAMP}.{FILE_FORMAT}",
+        "code_page":"65001",
+        "text_qualifier": "\"",
+        "csv_delimiter": ","
+    }
+}
